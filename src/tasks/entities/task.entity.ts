@@ -1,17 +1,28 @@
 // src/products/entities/product.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { TaskStatus } from "src/common/enums/tasks-status.enum";
+import { UserEntity } from "src/users/entities/user.entity";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, UpdateDateColumn } from "typeorm";
 
-@Entity({ name: 'tasks' }) // Mapeia para uma tabela chamada 'products'
+@Entity({ name: 'tasks' })
 export class TaskEntity {
-  @PrimaryGeneratedColumn() // Define como chave primária com auto-incremento
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 }) // Define uma coluna do tipo string (varchar)
-  name: string;
+  @Column()
+  title: string;
 
-  @Column({ length: 255 }) // Define uma coluna do tipo string (varchar)
-  description: string;
+  @Column({ type: 'text', nullable: true })
+  description?: string;
 
-  @CreateDateColumn({ name: 'created_at' }) // Coluna que armazena a data de criação
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.PENDING })
+  status: TaskStatus;
+
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+  
+  @ManyToOne(() => UserEntity, (user) => user.tasks, { eager: true })
+  user: UserEntity;
 }
