@@ -1,4 +1,18 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, HttpCode, HttpStatus, UseGuards, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -14,7 +28,7 @@ import type { UserPayload } from '../auth/interfaces/user-payload.interface';
 @UseGuards(AuthGuard('jwt'))
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
- 
+
   @Post()
   async create(
     @Body() createTaskDto: CreateTaskDto,
@@ -34,9 +48,7 @@ export class TasksController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<TaskEntity> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<TaskEntity> {
     return await this.tasksService.findOne(id);
   }
 

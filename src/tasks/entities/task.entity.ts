@@ -1,7 +1,14 @@
 // src/products/entities/product.entity.ts
-import { TaskStatus } from "src/common/enums/tasks-status.enum";
-import { UserEntity } from "src/users/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, UpdateDateColumn } from "typeorm";
+import { TaskStatus } from 'src/common/enums/tasks-status.enum';
+import { UserEntity } from 'src/users/entities/user.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'tasks' })
 export class TaskEntity {
@@ -22,7 +29,7 @@ export class TaskEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-  
+
   @ManyToOne(() => UserEntity, (user) => user.tasks, { eager: true })
   user: UserEntity;
 }

@@ -7,6 +7,6 @@ import { TaskEntity } from './entities/task.entity'; //importar a entidade
 @Module({
   imports: [TypeOrmModule.forFeature([TaskEntity])], //Registrar a entidade no modulo
   controllers: [TasksController],
-  providers: [TasksService]
+  providers: [TasksService],
 })
 export class TasksModule {}

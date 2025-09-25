@@ -19,7 +19,10 @@ export class TasksService {
     private readonly taskRepository: Repository<TaskEntity>,
   ) {}
 
-  async create(createTaskDto: CreateTaskDto, userId: number): Promise<TaskEntity> {
+  async create(
+    createTaskDto: CreateTaskDto,
+    userId: number,
+  ): Promise<TaskEntity> {
     // Cria a task associada ao usuário logado
     const newTask = this.taskRepository.create({
       ...createTaskDto,
@@ -29,7 +32,9 @@ export class TasksService {
     return await this.taskRepository.save(newTask);
   }
 
-  async findAll(options: FindAllOptions): Promise<PaginationResponseDto<TaskEntity>> {
+  async findAll(
+    options: FindAllOptions,
+  ): Promise<PaginationResponseDto<TaskEntity>> {
     const { page, limit } = options;
     const skip = (page - 1) * limit;
     const [data, total] = await this.taskRepository.findAndCount({
@@ -65,7 +70,9 @@ export class TasksService {
       status: updateTaskDto.status as TaskEntity['status'],
     });
     if (!task) {
-      throw new NotFoundException(`Tarefa com ID #${id} não encontrada para atualizar.`);
+      throw new NotFoundException(
+        `Tarefa com ID #${id} não encontrada para atualizar.`,
+      );
     }
     return await this.taskRepository.save(task);
   }

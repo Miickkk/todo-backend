@@ -3,22 +3,22 @@ import { Role } from '../../common/enums/role.enum';
 import { TaskEntity } from 'src/tasks/entities/task.entity';
 @Entity({ name: 'users' })
 export class UserEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
-    
-    @Column({ unique: true })
-    email: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    password: string;
+  @Column({ unique: true })
+  email: string;
 
-    @Column({
-        type: 'enum',
-        enum: Role,
-        default: Role.User,
-    })
-    role: Role;
+  @Column()
+  password: string;
 
-    @OneToMany(() => TaskEntity, (task) => task.user)
-    tasks: TaskEntity[];
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.User,
+  })
+  role: Role;
+
+  @OneToMany(() => TaskEntity, (task) => task.user)
+  tasks: TaskEntity[];
 }

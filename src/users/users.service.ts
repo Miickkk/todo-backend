@@ -6,21 +6,21 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
-constructor(
-@InjectRepository(UserEntity)
-private readonly usersRepository: Repository<UserEntity>,
-) {}
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly usersRepository: Repository<UserEntity>,
+  ) {}
 
-async create(createUserDto: CreateUserDto): Promise<UserEntity> {
-const salt = await bcrypt.genSalt();
-const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
-const user = this.usersRepository.create({
-...createUserDto,
-password: hashedPassword,
-});
-return await this.usersRepository.save(user);
-}
-async findByEmail(email: string): Promise<UserEntity | null> {
-return this.usersRepository.findOneBy({ email });
-}
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
+    const user = this.usersRepository.create({
+      ...createUserDto,
+      password: hashedPassword,
+    });
+    return await this.usersRepository.save(user);
+  }
+  async findByEmail(email: string): Promise<UserEntity | null> {
+    return this.usersRepository.findOneBy({ email });
+  }
 }
